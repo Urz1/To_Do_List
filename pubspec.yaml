@@ -1,0 +1,57 @@
+name: todo
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  expandable_menu: ^0.0.5
+  calender_picker: ^2.0.2
+  kalender: ^0.4.1
+  table_calendar: ^3.0.9
+  http: ^1.2.1
+  web_socket_channel: ^3.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/chaos.png
+    - assets/OneAfter.jpg
+    - assets/todo.png
+    - assets/
+
+
+# name: todo
+# description: "A new Flutter project."
+# publish_to: 'none' 
+# version: 1.0.0+1
+
+# environment:
+#   sdk: '>=3.4.3 <4.0.0'
+
+# dependencies:
+#   flutter:
+#     sdk: flutter
+
+#   cupertino_icons: ^1.0.6
+
+# dev_dependencies:
+#   flutter_test:
+#     sdk: flutter
+
+#  flutter:
+#   assets:
+#     - assets/
+#     - assets/todo-1-1x.png
+
+#   uses-material-design: true
