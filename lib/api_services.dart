@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class ApiService {
   static const String baseUrl = 'http://192.168.8.197:3000';
@@ -33,33 +34,36 @@ class ApiService {
       throw error; // Re-throw for further handling in the UI
     }
   }
-}
 
-class Fetch extends StatefulWidget {
-  const Fetch({super.key});
+  Future<List<Map<String, dynamic>>> fetchItems() async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/items'));
 
-  @override
-  State<Fetch> createState() => _FetchState();
-}
+      if (response.statusCode == 200) {
+        // Decode the JSON response body into a Dart List
+        var items = jsonDecode(response.body) as List<dynamic>;
+        var dateFormat = DateFormat('yyyy-MM-dd');
+        // Extract relevant fields
+        List<Map<String, dynamic>> filteredItems = items.map((item) {
+          var date = DateTime.parse(item['date']);
+          var formattedDate = dateFormat.format(date);
 
-class _FetchState extends State<Fetch> {
-  @override
+          return {
+            'id': item['_id'],
+            'task': item['task'],
+            'date': formattedDate
+          };
+        }).toList();
 
-    Future<void> fetchItems() async {
-    final response = await http.get(Uri.parse('http://localhost:3000/items'));
-
-    if (response.statusCode == 200) {
-      setState(() {
-        var items = json.decode(response.body);
-      });
-    } else {
+        return filteredItems;
+      } else {
+        print('Failed to load items: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Failed to load items');
+      }
+    } catch (e) {
+      print('Error: $e');
       throw Exception('Failed to load items');
     }
   }
-  
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-  }
+}

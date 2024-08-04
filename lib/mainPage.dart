@@ -64,11 +64,32 @@ class _TasksPageState extends State<TasksPage> {
   }
 }
 
-class TaskCard extends StatelessWidget {
+// Future<String> initState() async {
+//   setState() async { try {
+//     await ApiService().fetchItems();
+//     // Text(await ApiService().fetchItems())
+  
+//     return (await ApiService().fetchItems());
+//     print(await ApiService().fetchItems());
+//     print('Items fetched successfully');
+//   } catch (e) {
+//     print('error fetching items: $e');
+//   }}
+  
+ 
+// }
+
+class TaskCard extends StatefulWidget {
   final int index;
 
   TaskCard({required this.index});
 
+  @override
+  State<TaskCard> createState() => _TaskCardState();
+}
+
+class _TaskCardState extends State<TaskCard> {
+  // final int index;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -82,7 +103,7 @@ class TaskCard extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: Text(words[index]),
+              child: Text(initState() as String),
             ),
             IconButton(
               color: Colors.blue,
@@ -101,6 +122,45 @@ class TaskCard extends StatelessWidget {
     );
   }
 }
+
+// class TaskCard extends StatelessWidget {
+//   final int index;
+
+//   TaskCard({required this.index});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: EdgeInsets.all(8.0),
+//       child: Container(
+//         padding: EdgeInsets.all(8.0),
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(10),
+//           border: Border.all(color: Color.fromARGB(255, 210, 210, 210)),
+//         ),
+//         child: Row(
+//           children: [
+//             Expanded(
+
+//               child: Text(words[index]),
+//             ),
+//             IconButton(
+//               color: Colors.blue,
+//               onPressed: () {},
+//               icon: Icon(Icons.edit),
+//             ),
+//             IconButton(
+//               color: Colors.blue,
+//               onPressed: () {},
+//               icon: Icon(Icons.delete),
+//             ),
+//             SizedBox(width: 8),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class AddTasks extends StatefulWidget {
   const AddTasks({super.key});
@@ -162,6 +222,13 @@ class _AddTasksState extends State<AddTasks> {
                   onPressed: () async {
                     String taskday = _focusedDay.toIso8601String();
                     List<dynamic> inputData = [taskday, _titleController.text];
+                    try {
+                      await ApiService().fetchItems();
+                      print(await ApiService().fetchItems());
+                      print('Items fetched successfully');
+                    } catch (e) {
+                      print('error fetching items: $e');
+                    }
                     try {
                       final response =
                           await apiService.sendData(inputData as dynamic);
